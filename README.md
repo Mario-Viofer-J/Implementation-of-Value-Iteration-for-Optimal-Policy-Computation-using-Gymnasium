@@ -86,10 +86,6 @@ V(s) = \max_{a} \sum_{s'} P(s' \mid s, a)
 ## Python Program
 
 ```python
-# -------------------------------------------------
-# Value Iteration Algorithm
-# -------------------------------------------------
-
 def value_iteration(env, gamma=0.99, theta=1e-8):
     """
     Performs value iteration and returns the optimal value function.
@@ -97,51 +93,37 @@ def value_iteration(env, gamma=0.99, theta=1e-8):
 
     n_states = env.observation_space.n
     n_actions = env.action_space.n
-
+    P = env.unwrapped.P
+    
     V = np.zeros(n_states)
     iteration = 0
 
     while True:
+
         delta = 0
-
+        policy = np.zeros(n_states, dtype=int)
         for s in range(n_states):
-
-            action_values = np.zeros(n_actions)
+            v = V[s]
+            action_values = []
 
             for a in range(n_actions):
+                value = 0
 
-                for prob, next_state, reward, done in env.unwrapped.P[s][a]:
-                    action_values[a] += prob * (
-                        reward + gamma * V[next_state] * (not done)
-                    )
-
-            best_value = np.max(action_values)
-
-            delta = max(delta, abs(best_value - V[s]))
-            V[s] = best_value
+                for prob, next_state, reward, done in P[s][a]:
+                    value += prob * (reward + gamma * V[next_state] * (not done))
+                    
+                action_values.append(value)
+            policy[s] = np.argmax(action_values)
+            
+            V[s] = max(action_values)
+            delta = max(delta, abs(v - V[s]))
+            
 
         iteration += 1
-
+        
         if delta < theta:
             break
-
-    # Extract Optimal Policy
-    policy = np.zeros(n_states, dtype=int)
-
-    for s in range(n_states):
-
-        action_values = np.zeros(n_actions)
-
-        for a in range(n_actions):
-            for prob, next_state, reward, done in env.unwrapped.P[s][a]:
-                action_values[a] += prob * (
-                    reward + gamma * V[next_state] * (not done)
-                )
-
-        policy[s] = np.argmax(action_values)
-
     return V, policy, iteration
-
 ```
 
 ---
