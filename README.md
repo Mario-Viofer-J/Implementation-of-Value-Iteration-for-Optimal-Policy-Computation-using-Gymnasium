@@ -20,10 +20,10 @@ pip install gymnasium numpy matplotlib
 ## Environment Description
 The experiment uses a 4×4 Medium FrozenLake environment. The agent starts at the Start (S) state and aims to reach the Goal (G) while avoiding Holes (H). The map contains two holes, making navigation moderately difficult. The environment is slippery, meaning the agent may move in an unintended direction due to stochastic transitions. The Value Iteration algorithm computes the optimal value function and derives the optimal policy for reaching the goal with the highest expected reward.
 ```
-S F F F
-F F H F
-F H F F
-F F F G
+H S F F
+F H H F
+F H H F
+G F F F
 ```
 ## MDP Representation
 
