@@ -141,7 +141,7 @@ The Value Iteration algorithm was successfully implemented on the **4×4 Medium 
 
 
 ## Inference
-
-The experiment demonstrates that **Value Iteration** effectively solves a **Markov Decision Process (MDP)** by computing the optimal state values and deriving the corresponding optimal policy. The state values were observed to be higher for states closer to the goal and lower near holes, reflecting the expected future rewards. The algorithm converged after a finite number of iterations, confirming that Value Iteration is a reliable dynamic programming technique for determining optimal decision-making policies in uncertain environments.
-
-
+1. Changing the map layout affects the MDP by rearranging the start state, goal state, and hole positions.
+2. The modified environment creates different state transitions and fewer safe paths.
+3. The optimal value function, policy, and convergence behavior change according to the new environment.
+4. Value Iteration successfully adapts to these changes and finds the optimal policy, demonstrating its robustness across different MDP configurations.
